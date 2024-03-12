@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col gap-4 justify-center items-center">
+    <div class="flex flex-col gap-4 md:gap-6 justify-center items-center">
         <div class="flex gap-8 self-baseline w-full">
             <img class="w-32 h-32 self-end rounded-6 shadow-md hover:shadow-xl transition-all" alt=""
                 :src="githubRow + githubUrl + 'app/src/main/ic_launcher-playstore.png'" />
@@ -7,37 +7,35 @@
                 <p class="opacity-85 text-xl">Oblatum 图标</p>
                 <p class="opacity-65 capitalize">{{ version }}</p>
                 <mdui-button full-width class="w-full" :href="download_url" target="_blank">
-                    <mdui-icon slot="icon" name="downloading"></mdui-icon>
+                    <mdui-icon slot="icon" name="downloading--outlined"></mdui-icon>
                     下载
                 </mdui-button>
             </div>
 
         </div>
-
         <mdui-card variant="outlined" class="w-full p-0">
             <mdui-list class="p-0 grid grid-cols-2 opacity-55">
                 <mdui-list-item>
-                    <div class="flex flex-col items-center">
+                    <div class="flex flex-col items-center py-1">
                         <p class="m-0">{{ download_count }}次</p>
-                        <p class="m-0 font-black text-[14px]">下载</p>
+                        <p class="m-0 font-black text-sm scale-75">下载</p>
                     </div>
                 </mdui-list-item>
                 <mdui-list-item>
-                    <div class="flex flex-col items-center">
+                    <div class="flex flex-col items-center py-1">
                         <p class="m-0">{{ icons_count }}个</p>
-                        <p class="m-0 font-black text-[14px]">图标</p>
+                        <p class="m-0 font-black text-sm scale-75">图标</p>
                     </div>
                 </mdui-list-item>
             </mdui-list>
         </mdui-card>
 
         <mdui-card class="w-full p-4">
-            <h3 class="mt-0 opacity-85">更新日志 <span
-                    class="text-sm text-end opacity-55 font-normal">{{ update_time }}</span></h3>
+            <h3 class="mt-0 opacity-85">更新日志 <span class="text-sm text-end opacity-55 font-normal">{{ update_time
+                    }}</span></h3>
             <mdui-divider></mdui-divider>
             <p v-for="(item, index) in change_log" :key="index" class="opacity-75">{{ index + 1 }}、{{ item }}</p>
         </mdui-card>
-
 
         <mdui-card class="w-full p-4" v-if="new_icons.length != 0">
             <h3 class="mt-0 opacity-85">图标变动</h3>
@@ -54,10 +52,15 @@
             </mdui-list>
         </mdui-card>
         <Transition>
-            <div v-if="state < 3"
-                class="fixed w-full h-full bg-[rgba(var(--mdui-color-secondary-container-light),0.4)] top-0 left-0 flex flex-col justify-center items-center backdrop-blur-3xl backdrop-brightness-115 dark:backdrop-brightness-10">
+            <div v-if="state < 3&&state>=0"
+                class="fixed w-full h-full bg-[rgba(var(--mdui-color-secondary-container),0.4)] top-0 left-0 flex flex-col justify-center items-center backdrop-blur-3xl backdrop-brightness-115 dark:backdrop-brightness-50">
                 <mdui-circular-progress></mdui-circular-progress>
                 <p class="text-xl opacity-60">正在拉取数据...</p>
+            </div>
+        </Transition>
+        <Transition>
+            <div v-if="state<0" class="fixed w-full h-full bg-[rgba(var(--mdui-color-secondary-container),0.4)] top-0 left-0 flex flex-col justify-center items-center backdrop-blur-3xl backdrop-brightness-115 dark:backdrop-brightness-50">
+                <mdui-icon-error class="text-[3rem] text-[rgba(var(--mdui-color-error))]"></mdui-icon-error>
             </div>
         </Transition>
     </div>
@@ -80,6 +83,11 @@ const getVerson = async () => {
     const response = await fetch('https://api.github.com/repos/Oblatum/Oblatum-IconPack-Reborn/releases')
     let text = await response.text()
     text = JSON.parse(text)
+    //如果text[0]不存在，说明没有release，直接返回
+    if (!text[0]) {
+        state.value = -999
+        return
+    }
     //截取versionName开头，换行符结尾的字符串
     version.value = text[0].tag_name
     update_time.value = new Date(text[0].assets[0].updated_at).toLocaleString()
@@ -149,11 +157,11 @@ onMounted(() => {
 <style scoped>
 .v-enter-active,
 .v-leave-active {
-  transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease;
 }
 
 .v-enter-from,
 .v-leave-to {
-  opacity: 0;
+    opacity: 0;
 }
 </style>

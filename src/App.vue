@@ -34,8 +34,9 @@ onMounted(() => {
 
 <template>
   <mdui-layout>
-    <mdui-top-app-bar variant="medium" scroll-behavior="shrink elevate"
-      scroll-target=".example-scroll-behavior-shrink-elevate">
+
+
+    <mdui-top-app-bar variant="medium" scroll-behavior="shrink" scroll-threshold="30" scroll-target=".scroll-main">
       <!-- 前置按钮位置 -->
       <!-- 标题 -->
       <mdui-top-app-bar-title class="ml-4">
@@ -43,18 +44,26 @@ onMounted(() => {
       </mdui-top-app-bar-title>
       <div style="flex-grow: 1"></div>
       <!-- 后置按钮位置 -->
-      <mdui-button-icon icon="more_vert"></mdui-button-icon>
+      <mdui-button-icon icon="more_vert--outlined"></mdui-button-icon>
     </mdui-top-app-bar>
 
-    <mdui-navigation-bar :value="navigation_bar.items[navigation_bar.active].to" label-visibility="selected">
-      <mdui-navigation-bar-item v-for="item in navigation_bar.items" :key="item.to" :icon="item.icon" :value="item.to"
+    <mdui-navigation-rail :value="navigation_bar.items[navigation_bar.active].to" alignment="end"
+      class="bg-[rgba(0,0,0,0)] hidden sm:flex pt-16">
+      <mdui-navigation-rail-item v-for="item in navigation_bar.items" :key="item.to" :icon="item.icon+'--outlined'" :active-icon="item.icon" :value="item.to"
+        @click="navigation_bar__click(item.to)">
+        {{ item.name }}</mdui-navigation-rail-item>
+    </mdui-navigation-rail>
+
+    <mdui-navigation-bar :value="navigation_bar.items[navigation_bar.active].to" label-visibility="selected"
+      class="md:hidden">
+      <mdui-navigation-bar-item v-for="item in navigation_bar.items" :key="item.to" :icon="item.icon+'--outlined'" :active-icon="item.icon" :value="item.to"
         @click="navigation_bar__click(item.to)">
         {{ item.name }}
       </mdui-navigation-bar-item>
     </mdui-navigation-bar>
 
-    <mdui-layout-main class="example-scroll-behavior-shrink-elevate overflow-auto h-screen">
-      <div class="px-4 md:px-8">
+    <mdui-layout-main class="scroll-main overflow-auto h-screen">
+      <div class="px-4 md:px-16 lg:mx-auto lg:max-w-[800px]">
         <RouterView class="z-100 relative"></RouterView>
         <div class="py-8 px-4 flex flex-col items-center justify-center opacity-65 [&>*]:m-0 z-10">
           <p class="text-sm scale-75">Copyright © 2024 Oblatum Org. 保留所有权利。</p>

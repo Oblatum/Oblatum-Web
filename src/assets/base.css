@@ -3,3 +3,7 @@ body{
   margin: 0;
   padding: 0;
 }
+
+.mdui-theme-dark mdui-card[variant="elevated"]{
+  background-color: rgba(var(--mdui-color-surface-container-high),1);
+}
