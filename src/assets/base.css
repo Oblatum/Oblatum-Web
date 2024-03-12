@@ -7,3 +7,11 @@ body{
 .mdui-theme-dark mdui-card[variant="elevated"]{
   background-color: rgba(var(--mdui-color-surface-container-high),1);
 }
+
+a{
+  color: rgb(var(--mdui-color-secondary));
+  cursor: pointer;
+}
+a:hover{
+  text-decoration:underline;
+}

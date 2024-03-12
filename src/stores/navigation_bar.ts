@@ -16,12 +16,12 @@ export const useNavigationBarStore = defineStore('navigation_bar', {
         icon: "download",
         to: "download"
       },
-      // {
-      //   name: "申请",
-      //   title: "申请",
-      //   icon: "markunread_mailbox",
-      //   to: "apply"
-      // },
+      {
+        name: "申请",
+        title: "申请",
+        icon: "markunread_mailbox",
+        to: "apply"
+      },
       // {
       //   name: "友链",
       //   title: "友链",
