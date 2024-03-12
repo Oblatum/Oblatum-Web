@@ -55,12 +55,16 @@
             <div v-if="state < 3&&state>=0"
                 class="fixed w-full h-full bg-[rgba(var(--mdui-color-secondary-container),0.4)] top-0 left-0 flex flex-col justify-center items-center backdrop-blur-3xl backdrop-brightness-115 dark:backdrop-brightness-50">
                 <mdui-circular-progress></mdui-circular-progress>
-                <p class="text-xl opacity-60">正在拉取数据...</p>
+                <p class="text-xl opacity-60 mb-1">正在拉取数据...</p>
+                <p class="text-xs opacity-60 mt-0">Fetching data...</p>
             </div>
         </Transition>
         <Transition>
             <div v-if="state<0" class="fixed w-full h-full bg-[rgba(var(--mdui-color-secondary-container),0.4)] top-0 left-0 flex flex-col justify-center items-center backdrop-blur-3xl backdrop-brightness-115 dark:backdrop-brightness-50">
                 <mdui-icon-error class="text-[3rem] text-[rgba(var(--mdui-color-error))]"></mdui-icon-error>
+                <p class="text-xl opacity-60 mb-1">获取数据异常</p>
+                <p class="text-xs opacity-60 mt-0">Failed to fetch data, code:{{ state }}.</p>
+                <p class="text-xs mt-0 text-[rgba(var(--mdui-color-secondary))]">刷新试试？</p>
             </div>
         </Transition>
     </div>
@@ -85,7 +89,7 @@ const getVerson = async () => {
     text = JSON.parse(text)
     //如果text[0]不存在，说明没有release，直接返回
     if (!text[0]) {
-        state.value = -999
+        state.value += -90
         return
     }
     //截取versionName开头，换行符结尾的字符串
@@ -99,6 +103,10 @@ const getVerson = async () => {
 const getChangeLog = async () => {
     const response = await fetch(githubRow + githubUrl + 'app/src/main/res/xml/changelog.xml')
     const text = await response.text()
+    if (text.includes("404: Not Found")) {
+        state.value += -900
+        return
+    }
     //读取xml中resources下的所有item的text
     for (let i = 1; i < text.split("<item text=\"").length; i++) {
         let item = text.split("<item text=\"")[i].split("\"")[0]
@@ -112,6 +120,10 @@ const getChangeLog = async () => {
 const getNewIconsAndAll = async () => {
     const response = await fetch(githubRow + githubUrl + 'app/src/main/res/xml/drawable.xml')
     const text = await response.text()
+    if (text.includes("404: Not Found")) {
+        state.value += -9000
+        return
+    }
     //截取<category title="New and Update" />到下一个<category 之间的所有drawable="xxx"的字符串
     let getNew_icons = text.split("<category title=\"New and Update\" />")[1].split("<category ")[0].split("drawable=\"")
     for (let i = 1; i < getNew_icons.length; i++) {
