@@ -72,8 +72,9 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 
-const githubRow = "https://gh.api.99988866.xyz/"
-const githubUrl = "https://raw.githubusercontent.com/Oblatum/Oblatum-IconPack-Reborn/master/"
+import { useGithubStore } from '@/stores/github';
+const githubRow = useGithubStore().proxy
+const githubUrl = useGithubStore().url
 let version = ref('NaN')
 let update_time = ref('NaN')
 let change_log = ref([])

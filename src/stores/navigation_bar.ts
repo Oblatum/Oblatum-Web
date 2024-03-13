@@ -17,8 +17,8 @@ export const useNavigationBarStore = defineStore('navigation_bar', {
         to: "download"
       },
       {
-        name: "申请",
-        title: "申请",
+        name: "适配",
+        title: "适配",
         icon: "markunread_mailbox",
         to: "apply"
       },
