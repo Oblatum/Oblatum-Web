@@ -1,5 +1,5 @@
 <script setup>
-import { ref,onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const themes = ref([
   {
@@ -31,9 +31,9 @@ import OblatumContentIcon from '@/components/icons/OblatumContentIcon.vue';
 const icons = useIconsStore();
 let iconsShow = ref([])
 let weatherIcons = ref([])
-const getIconsShow = ()=>{
+const getIconsShow = () => {
   //如果icons.allIcons为空，返回空数组
-  if(icons.allIcons.length==0){
+  if (icons.allIcons.length == 0) {
     return []
   }
   let arr = []
@@ -43,12 +43,8 @@ const getIconsShow = ()=>{
   return arr
 }
 
-const getWeatherIcons = ()=>{
-  let arr = []
-  //0-47随机数，取6个
-  for (let i = 0; i < 6; i++) {
-    arr.push("weather_"+Math.floor(Math.random() * 48))
-  }
+const getWeatherIcons = () => {
+  let arr = ["weather_34", "weather_12", "weather_19", "weather_1", "weather_37", "weather_44"]
   return arr
 }
 
@@ -71,15 +67,19 @@ onMounted(() => {
       <h1>不规则质感设计</h1>
       <p>基于Material Design，淡化了原有的质感，视感更加的和谐。</p>
     </div>
-    <div class="grid grid-cols-4 lg:grid-cols-6 gap-6 my-4 md:col-span-3">
-      <OblatumContentIcon v-for="icon in iconsShow" :key="icon" :iconUrl="'res/drawable-nodpi/'+icon" :textShow="false" />
+    <div
+      class="grid grid-cols-4 lg:grid-cols-6 gap-6 p-4 md:col-span-3 bg-gradient-to-rb from-[rgba(41,170,224,0.3)] to-[rgba(138,103,184,0.6)] rounded-4 shadow-sm cursor-pointer"
+      @click="()=>{iconsShow = getIconsShow()}">
+      <OblatumContentIcon v-for="icon in iconsShow" :key="icon" :iconUrl="'res/drawable-nodpi/' + icon"
+        :textShow="false" />
     </div>
     <div class="block md:hidden">
       <h1>天气图标扩展</h1>
       <p>支持几何天气图标扩展和Chronus图标包。</p>
     </div>
     <div class="md:col-span-2 grid grid-cols-3 gap-6 my-4 md:mt-24">
-      <OblatumContentIcon v-for="icon in weatherIcons" :key="icon" :iconUrl="'res/drawable-xxxhdpi-v4/'+icon" :textShow="false" />
+      <OblatumContentIcon v-for="icon in weatherIcons" :key="icon" :iconUrl="'res/drawable-xxxhdpi-v4/' + icon"
+        :textShow="false" />
     </div>
     <div class="hidden md:flex flex-col justify-end">
       <h1>天气图标扩展</h1>
@@ -89,8 +89,10 @@ onMounted(() => {
       <h1>主题</h1>
     </div>
     <mdui-card class="flex flex-col  md:col-span-3">
-      <mdui-tabs :value="themes[activeThemeTab].value" placement="bottom-start" class="[&>mdui-tab-panel]:m-4 mt-16" variant="secondary">
-        <mdui-tab v-for="(theme,index) in themes" @click="activeThemeTab=index" :key="theme.value" :value="theme.value">{{ theme.name }}</mdui-tab>
+      <mdui-tabs :value="themes[activeThemeTab].value" placement="bottom-start" class="[&>mdui-tab-panel]:m-4 mt-16"
+        variant="secondary">
+        <mdui-tab v-for="(theme, index) in themes" @click="activeThemeTab = index" :key="theme.value"
+          :value="theme.value">{{ theme.name }}</mdui-tab>
 
         <mdui-tab-panel slot="panel" value="tab-oppo">
           <p>OPPO主题</p>
