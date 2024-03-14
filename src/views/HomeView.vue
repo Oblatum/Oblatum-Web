@@ -24,17 +24,71 @@ const changeActiveThemeTab = () => {
   }, 6000);
 };
 
+
+import { useIconsStore } from '../stores/icons';
+import OblatumContentIcon from '@/components/icons/OblatumContentIcon.vue';
+
+const icons = useIconsStore();
+let iconsShow = ref([])
+let weatherIcons = ref([])
+const getIconsShow = ()=>{
+  //如果icons.allIcons为空，返回空数组
+  if(icons.allIcons.length==0){
+    return []
+  }
+  let arr = []
+  for (let i = 0; i < 12; i++) {
+    arr.push(icons.allIcons[Math.floor(Math.random() * icons.allIcons.length)])
+  }
+  return arr
+}
+
+const getWeatherIcons = ()=>{
+  let arr = []
+  //0-47随机数，取6个
+  for (let i = 0; i < 6; i++) {
+    arr.push("weather_"+Math.floor(Math.random() * 48))
+  }
+  return arr
+}
+
 onMounted(() => {
   changeActiveThemeTab();
+  setTimeout(() => {
+    iconsShow.value = getIconsShow();
+    weatherIcons.value = getWeatherIcons();
+  }, 1000);
 });
+
+
 
 </script>
 
 <template>
-  <div class="my-4 mx-2">
-    <h1>首页建设中...</h1>
-    <p>看看下载页吧</p>
-    <mdui-card class="flex flex-col">
+  <div class="mt-36 mb-4 mx-2 poster grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="md:col-span-3">
+      <h1 class="text-[rgba(var(--oblatum-color-primary))]">经典的</h1>
+      <h1>不规则质感设计</h1>
+      <p>基于Material Design，淡化了原有的质感，视感更加的和谐。</p>
+    </div>
+    <div class="grid grid-cols-4 lg:grid-cols-6 gap-6 my-4 md:col-span-3">
+      <OblatumContentIcon v-for="icon in iconsShow" :key="icon" :iconUrl="'res/drawable-nodpi/'+icon" :textShow="false" />
+    </div>
+    <div class="block md:hidden">
+      <h1>天气图标扩展</h1>
+      <p>支持几何天气图标扩展和Chronus图标包。</p>
+    </div>
+    <div class="md:col-span-2 grid grid-cols-3 gap-6 my-4 md:mt-24">
+      <OblatumContentIcon v-for="icon in weatherIcons" :key="icon" :iconUrl="'res/drawable-xxxhdpi-v4/'+icon" :textShow="false" />
+    </div>
+    <div class="hidden md:flex flex-col justify-end">
+      <h1>天气图标扩展</h1>
+      <p>支持几何天气图标扩展和Chronus图标包。</p>
+    </div>
+    <div class="md:col-span-3 md:mt-24">
+      <h1>主题</h1>
+    </div>
+    <mdui-card class="flex flex-col  md:col-span-3">
       <mdui-tabs :value="themes[activeThemeTab].value" placement="bottom-start" class="[&>mdui-tab-panel]:m-4 mt-16" variant="secondary">
         <mdui-tab v-for="(theme,index) in themes" @click="activeThemeTab=index" :key="theme.value" :value="theme.value">{{ theme.name }}</mdui-tab>
 

@@ -7,17 +7,52 @@ import { useNavigationBarStore } from './stores/navigation_bar'
 
 import { setColorScheme } from 'mdui/functions/setColorScheme.js';
 
+import { useGithubStore } from '@/stores/github';
+import { useIconsStore } from './stores/icons';
+const githubRow = useGithubStore().proxy
+const githubUrl = useGithubStore().url
+
 setColorScheme('#29aae0')
 
 const router = useRouter()
 
 const navigation_bar = useNavigationBarStore()
+const icons = useIconsStore()
 
 
 
 const navigation_bar__click = (value: string) => {
   router.push({ name: value })
   navigation_bar.setActive(value)
+}
+
+const getNewIconsAndAll = async () => {
+    const response = await fetch(githubRow + githubUrl + 'app/src/main/res/xml/drawable.xml')
+    const text = await response.text()
+    let new_icons = ref<string[]>([])
+    let icons_all = ref<string[]>([])
+
+    //截取<category title="New and Update" />到下一个<category 之间的所有drawable="xxx"的字符串
+    let getNew_icons = text.split("<category title=\"New and Update\" />")[1].split("<category ")[0].split("drawable=\"")
+    for (let i = 1; i < getNew_icons.length; i++) {
+        let icon = getNew_icons[i].split("\"")[0]
+        if (icon != "") {
+            new_icons.value.push(icon)
+        }
+    }
+    //截取<category title="All" />到下一个<category 之间的所有drawable="xxx"的字符串
+    let getIcons = text.split("<category title=\"All\" />")[1].split("<category ")[0].split("drawable=\"")
+    let all = []
+    for (let i = 1; i < getIcons.length; i++) {
+        let icon = getIcons[i].split("\"")[0]
+        if (icon != "") {
+            all.push(icon)
+        }
+    }
+    icons_all.value = all
+    icons.newIcons =  new_icons.value
+    icons.allIcons = icons_all.value
+
 }
 
 //mounted生命周期
@@ -28,6 +63,7 @@ onMounted(() => {
     const path = router.currentRoute.value.name
     navigation_bar.setActive(path)
   })
+  getNewIconsAndAll()
 })
 
 </script>
@@ -41,7 +77,8 @@ onMounted(() => {
       <!-- 标题 -->
       <mdui-top-app-bar-title class="ml-4">
         {{ navigation_bar.items[navigation_bar.active].name }}
-      </mdui-top-app-bar-title>
+      <span slot="label-large">{{ navigation_bar.items[navigation_bar.active].title }}</span>
+    </mdui-top-app-bar-title>
       <div style="flex-grow: 1"></div>
       <!-- 后置按钮位置 -->
       <mdui-button-icon icon="more_vert--outlined"></mdui-button-icon>
@@ -78,4 +115,22 @@ onMounted(() => {
 </template>
 
 <style>
+.poster *{
+  line-height: 1.8;
+}
+.poster h1,h2,h3,h4,h5,h6{
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+.poster p,a,span{
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+.poster p{
+  opacity: 0.65;
+}
+mdui-card > h3{
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.1em;
+}
 </style>

@@ -42,17 +42,12 @@
             <mdui-divider></mdui-divider>
             <mdui-list class="pt-0 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
                 <mdui-list-item v-for="(item, index) in new_icons" :key="index">
-                    <div class="flex flex-col items-center">
-                        <img class="size-16 md:size-24 mx-auto" alt=""
-                            :src="githubRow + githubUrl + 'app/src/main/res/drawable-nodpi/' + item + '.png'">
-                        <!-- 溢出省略 -->
-                        <p class="text-center text-xs md:text-sm overflow-ellipsis">{{ appTextFormat(item) }}</p>
-                    </div>
+                    <OblatumContentIcon :iconUrl="'res/drawable-nodpi/'+item" />
                 </mdui-list-item>
             </mdui-list>
         </mdui-card>
         <Transition>
-            <div v-if="state < 3&&state>=0"
+            <div v-if="state < 3 && state >= 0"
                 class="fixed w-full h-full bg-[rgba(var(--mdui-color-secondary-container),0.4)] top-0 left-0 flex flex-col justify-center items-center backdrop-blur-3xl backdrop-brightness-115 dark:backdrop-brightness-50">
                 <mdui-circular-progress></mdui-circular-progress>
                 <p class="text-xl opacity-60 mb-1">正在拉取数据...</p>
@@ -60,7 +55,8 @@
             </div>
         </Transition>
         <Transition>
-            <div v-if="state<0" class="fixed w-full h-full bg-[rgba(var(--mdui-color-secondary-container),0.4)] top-0 left-0 flex flex-col justify-center items-center backdrop-blur-3xl backdrop-brightness-115 dark:backdrop-brightness-50">
+            <div v-if="state < 0"
+                class="fixed w-full h-full bg-[rgba(var(--mdui-color-secondary-container),0.4)] top-0 left-0 flex flex-col justify-center items-center backdrop-blur-3xl backdrop-brightness-115 dark:backdrop-brightness-50">
                 <mdui-icon-error class="text-[3rem] text-[rgba(var(--mdui-color-error))]"></mdui-icon-error>
                 <p class="text-xl opacity-60 mb-1">获取数据异常</p>
                 <p class="text-xs opacity-60 mt-0">Failed to fetch data, code:{{ state }}.</p>
@@ -71,8 +67,10 @@
 </template>
 <script setup>
 import { onMounted, ref } from 'vue'
-
+import OblatumContentIcon from '@/components/icons/OblatumContentIcon.vue';
 import { useGithubStore } from '@/stores/github';
+import { useIconsStore } from '@/stores/icons';
+const icons = useIconsStore()
 const githubRow = useGithubStore().proxy
 const githubUrl = useGithubStore().url
 let version = ref('NaN')
@@ -115,38 +113,16 @@ const getChangeLog = async () => {
             change_log.value.push(item)
         }
     }
-    state.value++
-}
-
-const getNewIconsAndAll = async () => {
-    const response = await fetch(githubRow + githubUrl + 'app/src/main/res/xml/drawable.xml')
-    const text = await response.text()
-    if (text.includes("404: Not Found")) {
-        state.value += -9000
-        return
-    }
-    //截取<category title="New and Update" />到下一个<category 之间的所有drawable="xxx"的字符串
-    let getNew_icons = text.split("<category title=\"New and Update\" />")[1].split("<category ")[0].split("drawable=\"")
-    for (let i = 1; i < getNew_icons.length; i++) {
-        let icon = getNew_icons[i].split("\"")[0]
-        if (icon != "") {
-            new_icons.value.push(icon)
-        }
-    }
-    //截取<category title="All" />到下一个<category 之间的所有drawable="xxx"的字符串
-    let getIcons = text.split("<category title=\"All\" />")[1].split("<category ")[0].split("drawable=\"")
-    let count = 0
-    for (let i = 1; i < getIcons.length; i++) {
-        let icon = getIcons[i].split("\"")[0]
-        if (icon != "") {
-            count++
-        }
-    }
-    icons_count.value = count
     const timeout = setTimeout(() => {
         state.value++
         clearTimeout(timeout)
     }, 300);
+}
+
+const getNewIconsAndAll = async () => {
+    new_icons.value = icons.newIcons
+    icons_count.value = icons.allIcons.length
+    state.value++
 }
 
 const appTextFormat = (text) => {

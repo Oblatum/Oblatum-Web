@@ -6,7 +6,7 @@ export const useNavigationBarStore = defineStore('navigation_bar', {
     items:[
       {
         name: "首页",
-        title: "Obaltum Iconpack",
+        title: "Oblatum 图标",
         icon: "home",
         to: "home"
       },
