@@ -85,14 +85,14 @@ onMounted(() => {
     </mdui-top-app-bar>
 
     <mdui-navigation-rail :value="navigation_bar.items[navigation_bar.active].to" alignment="end"
-      class="bg-[rgba(0,0,0,0)] hidden sm:flex pt-16">
+      class="bg-[rgba(0,0,0,0)] hidden md:flex pt-16">
       <mdui-navigation-rail-item v-for="item in navigation_bar.items" :key="item.to" :icon="item.icon+'--outlined'" :active-icon="item.icon" :value="item.to"
         @click="navigation_bar__click(item.to)">
         {{ item.name }}</mdui-navigation-rail-item>
     </mdui-navigation-rail>
 
     <mdui-navigation-bar :value="navigation_bar.items[navigation_bar.active].to" label-visibility="selected"
-      class="md:hidden">
+      class="flex md:hidden">
       <mdui-navigation-bar-item v-for="item in navigation_bar.items" :key="item.to" :icon="item.icon+'--outlined'" :active-icon="item.icon" :value="item.to"
         @click="navigation_bar__click(item.to)">
         {{ item.name }}
