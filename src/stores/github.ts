@@ -7,7 +7,7 @@ export const useGithubStore = defineStore('github', {
         url:"https://raw.githubusercontent.com/Oblatum/Oblatum-IconPack-Reborn/master/"
     }),
     getters: {
-        getGithubUrl(){
+        getGithubUrl():string{
             // return this.url.replace("raw.githubusercontent.com","raw.staticdn.net");
             return this.proxy + this.url;
         }
