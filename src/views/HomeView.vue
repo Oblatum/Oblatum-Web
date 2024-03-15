@@ -24,6 +24,22 @@ const changeActiveThemeTab = () => {
   }, 6000);
 };
 
+const colors = ref(["ff6002","32adfe","b693fd","00c562","f04e42","7dbdbc","ff4455","fc7694","ffd705","c11d22"]);
+const colorShow = ref([])
+//从中随机取出8个不重复颜色,代码简短
+const getColors = () => {
+  let arr = []
+  for (let i = 0; i < 8; i++) {
+    let color = colors.value[Math.floor(Math.random() * colors.value.length)]
+    if (!arr.includes(color)) {
+      arr.push(color)
+    } else {
+      i--
+    }
+  }
+  colorShow.value = arr
+  return arr
+}
 
 import { useIconsStore } from '../stores/icons';
 import OblatumContentIcon from '@/components/icons/OblatumContentIcon.vue';
@@ -49,10 +65,11 @@ const getWeatherIcons = () => {
 }
 
 onMounted(() => {
-  changeActiveThemeTab();
+  changeActiveThemeTab()
+  getColors()
   setTimeout(() => {
-    iconsShow.value = getIconsShow();
-    weatherIcons.value = getWeatherIcons();
+    iconsShow.value = getIconsShow()
+    weatherIcons.value = getWeatherIcons()
   }, 1000);
 });
 
@@ -73,17 +90,25 @@ onMounted(() => {
       <OblatumContentIcon v-for="icon in iconsShow" :key="icon" :iconUrl="'res/drawable-nodpi/' + icon"
         :textShow="false" />
     </div>
-    <div class="block md:hidden">
-      <h1>天气图标扩展</h1>
+
+    <div class="col-span-full flex flex-col md:flex-row-reverse my-4 md:mt-24 gap-4">
+      <div class="block md:flex flex-col justify-end items-end md:w-1/3">
+        <h1>颜色优调</h1>
+        <p>如糖果般甜</p>
+      </div>
+      <div class="grow md:col-span-2 grid grid-cols-4 gap-8 justify-items-center">
+        <div v-for="color in colorShow" :key="color" class="size-16 rounded-50 shadow-md" :style="{background:'#'+color}" ></div>
+      </div>
+    </div>
+    
+    <div class="block md:flex flex-col justify-end">
+      <h1 class="text-[rgba(var(--oblatum-color-primary))]">天气</h1>
+      <h1>图标扩展</h1>
       <p>支持几何天气图标扩展和Chronus图标包。</p>
     </div>
     <div class="md:col-span-2 grid grid-cols-3 gap-6 my-4 md:mt-24">
       <OblatumContentIcon v-for="icon in weatherIcons" :key="icon" :iconUrl="'res/drawable-xxxhdpi-v4/' + icon"
         :textShow="false" />
-    </div>
-    <div class="hidden md:flex flex-col justify-end">
-      <h1>天气图标扩展</h1>
-      <p>支持几何天气图标扩展和Chronus图标包。</p>
     </div>
     <div class="md:col-span-3 md:mt-24">
       <h1>主题</h1>

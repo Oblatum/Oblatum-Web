@@ -22,6 +22,7 @@ const icons = useIconsStore()
 
 
 const navigation_bar__click = (value: string) => {
+  document.querySelector('.scroll-main')?.scrollTo({ top: 0, behavior: 'smooth' })
   router.push({ name: value })
   navigation_bar.setActive(value)
 }
