@@ -2,7 +2,7 @@
     <div class="flex flex-col gap-4 md:gap-6 justify-center items-center">
         <div class="flex gap-8 self-baseline w-full">
             <img class="w-32 h-32 self-end rounded-6 shadow-md hover:shadow-xl transition-all" alt=""
-                :src="githubRow + githubUrl + 'app/src/main/ic_launcher-playstore.png'" />
+                :src="githubUrl + 'app/src/main/ic_launcher-playstore.png'" />
             <div class="grow">
                 <p class="opacity-85 text-xl">Oblatum 图标</p>
                 <p class="opacity-65 capitalize">{{ version }}</p>
@@ -71,8 +71,7 @@ import OblatumContentIcon from '@/components/icons/OblatumContentIcon.vue';
 import { useGithubStore } from '@/stores/github';
 import { useIconsStore } from '@/stores/icons';
 const icons = useIconsStore()
-const githubRow = useGithubStore().proxy
-const githubUrl = useGithubStore().url
+const githubUrl = useGithubStore().getGithubUrl
 let version = ref('NaN')
 let update_time = ref('NaN')
 let change_log = ref([])
@@ -100,7 +99,7 @@ const getVerson = async () => {
 }
 
 const getChangeLog = async () => {
-    const response = await fetch(githubRow + githubUrl + 'app/src/main/res/xml/changelog.xml')
+    const response = await fetch(githubUrl + 'app/src/main/res/xml/changelog.xml')
     const text = await response.text()
     if (text.includes("404: Not Found")) {
         state.value += -900

@@ -9,8 +9,7 @@ import { setColorScheme } from 'mdui/functions/setColorScheme.js';
 
 import { useGithubStore } from '@/stores/github';
 import { useIconsStore } from './stores/icons';
-const githubRow = useGithubStore().proxy
-const githubUrl = useGithubStore().url
+const githubUrl = useGithubStore().getGithubUrl
 
 setColorScheme('#29aae0')
 
@@ -28,7 +27,7 @@ const navigation_bar__click = (value: string) => {
 }
 
 const getNewIconsAndAll = async () => {
-    const response = await fetch(githubRow + githubUrl + 'app/src/main/res/xml/drawable.xml')
+    const response = await fetch(githubUrl + 'app/src/main/res/xml/drawable.xml')
     const text = await response.text()
     let new_icons = ref<string[]>([])
     let icons_all = ref<string[]>([])

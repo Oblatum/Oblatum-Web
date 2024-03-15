@@ -8,9 +8,7 @@
 
 import { useGithubStore } from '@/stores/github';
 import { computed } from 'vue';
-const github = useGithubStore()
-const githubRow = github.proxy
-const githubUrl = github.url
+const githubUrl = useGithubStore().getGithubUrl
 
 //接收父组件传来的icon属性(动态可变)
 
@@ -22,7 +20,7 @@ const props = defineProps({
     }
 })
 let imgurl = computed(()=>{
-    return githubRow + githubUrl + 'app/src/main/' + props.iconUrl + '.png'
+    return githubUrl + 'app/src/main/' + props.iconUrl + '.png'
 })
 const icon = ()=>{
     return props.iconUrl.split("/").pop()
