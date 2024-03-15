@@ -1,5 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import type { RouteRecordName } from 'vue-router'
 
 export const useNavigationBarStore = defineStore('navigation_bar', {
   state: () => ({
@@ -37,7 +38,7 @@ export const useNavigationBarStore = defineStore('navigation_bar', {
     }
   },
   actions: {
-    setActive(to: string) {
+    setActive(to: RouteRecordName) {
       const index = this.items.findIndex((item) => item.to === to)
       if (index !== -1) {
         this.active = index

@@ -61,7 +61,7 @@ onMounted(() => {
   //routerReady生命周期
   router.isReady().then(() => {
     //获取currentRoute
-    const path = router.currentRoute.value.name
+    const path = router.currentRoute.value.name || ''
     navigation_bar.setActive(path)
   })
   getNewIconsAndAll()
