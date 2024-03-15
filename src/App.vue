@@ -99,7 +99,7 @@ onMounted(() => {
       </mdui-navigation-bar-item>
     </mdui-navigation-bar>
 
-    <mdui-layout-main class="scroll-main overflow-auto h-screen">
+    <mdui-layout-main class="scroll-main overflow-auto h-[100dvh]">
       <div class="px-4 md:px-16 lg:mx-auto lg:max-w-[980px]">
         <RouterView class="z-100 relative"></RouterView>
         <div class="py-8 px-4 flex flex-col items-center justify-center opacity-65 [&>*]:m-0 z-10">
