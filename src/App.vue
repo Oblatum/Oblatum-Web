@@ -103,7 +103,7 @@ onMounted(() => {
       <div class="px-4 md:px-16 lg:mx-auto lg:max-w-[980px]">
         <RouterView class="z-100 relative"></RouterView>
         <div class="py-8 px-4 flex flex-col items-center justify-center opacity-65 [&>*]:m-0 z-10">
-          <p class="text-sm scale-75">Copyright © 2024 Oblatum Org. 保留所有权利。</p>
+          <p class="text-sm scale-75">Copyright © 2024 Oblatum Org. 保留所有权利。v0.1.240315.1139</p>
           <p class="text-sm scale-75"><a class="no-underline hover:underline cursor-pointer">蜀ICP备 备案号预留位</a></p>
 
         </div>
