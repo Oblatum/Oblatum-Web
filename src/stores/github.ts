@@ -9,7 +9,7 @@ export const useGithubStore = defineStore('github', {
     getters: {
         getGithubUrl():string{
             // return this.url.replace("raw.githubusercontent.com","raw.staticdn.net");
-            return this.proxy + this.url;
+            return this.url;
         }
     }
 
