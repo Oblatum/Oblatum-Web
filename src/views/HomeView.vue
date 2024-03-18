@@ -85,7 +85,7 @@ onMounted(() => {
       <p>基于Material Design，淡化了原有的质感，视感更加的和谐。</p>
     </div>
     <div
-      class="grid grid-cols-3 lg:grid-cols-6 gap-6 p-4 md:col-span-3 bg-gradient-to-rb from-[rgba(41,170,224,0.1)] to-[rgba(108,128,208,0.2)] rounded-4 shadow-sm cursor-pointer"
+      class="grid grid-cols-3 lg:grid-cols-6 gap-6 p-4 md:col-span-3 bg-gradient-to-rb from-[rgba(41,170,224,0.1)] to-[rgba(108,128,208,0.2)] rounded-4 shadow-sm"
       >
       <!-- @click="()=>{iconsShow = getIconsShow()}"> -->
       <OblatumContentIcon v-for="icon in iconsShow" :key="icon" :iconUrl="'res/drawable-nodpi/' + icon"
