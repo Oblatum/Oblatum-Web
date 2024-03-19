@@ -24,7 +24,7 @@ const changeActiveThemeTab = () => {
   }, 6000);
 };
 
-const colors = ref(["ff6002","32adfe","b693fd","00c562","f04e42","7dbdbc","ff4455","fc7694","ffd705","c11d22"]);
+const colors = ref(["ff6002", "32adfe", "b693fd", "00c562", "f04e42", "7dbdbc", "ff4455", "fc7694", "ffd705", "c11d22"]);
 const colorShow = ref([])
 //从中随机取出8个不重复颜色,代码简短
 const getColors = () => {
@@ -80,13 +80,15 @@ onMounted(() => {
 <template>
   <div class="mt-36 mb-4 mx-2 poster grid grid-cols-1 md:grid-cols-3 gap-8">
     <div class="md:col-span-3">
+      <div class="flex gap-4 items-end">
+        <img src="@/assets/oblatum_logo_blue.svg" alt="Oblatum" class="size-8 md:size-12 self-center" />
       <h1 class="text-[rgba(var(--oblatum-color-primary))]">经典的</h1>
+      </div>
       <h1>不规则质感设计</h1>
       <p>基于Material Design，淡化了原有的质感，视感更加的和谐。</p>
     </div>
     <div
-      class="grid grid-cols-3 lg:grid-cols-6 gap-6 p-4 md:col-span-3 bg-gradient-to-rb from-[rgba(41,170,224,0.1)] to-[rgba(108,128,208,0.2)] rounded-4 shadow-sm"
-      >
+      class="grid grid-cols-3 lg:grid-cols-6 gap-6 p-4 md:col-span-3 bg-gradient-to-rb from-[rgba(41,170,224,0.1)] to-[rgba(108,128,208,0.2)] rounded-4 shadow-sm">
       <!-- @click="()=>{iconsShow = getIconsShow()}"> -->
       <OblatumContentIcon v-for="icon in iconsShow" :key="icon" :iconUrl="'res/drawable-nodpi/' + icon"
         :textShow="false" />
@@ -98,10 +100,11 @@ onMounted(() => {
         <p>如糖果般甜</p>
       </div>
       <div class="grow md:col-span-2 grid grid-cols-4 gap-8 justify-items-center">
-        <div v-for="color in colorShow" :key="color" class="size-16 rounded-50 shadow-md" :style="{background:'#'+color}" ></div>
+        <div v-for="color in colorShow" :key="color" class="size-16 rounded-50 shadow-md"
+          :style="{ background: '#' + color }"></div>
       </div>
     </div>
-    
+
     <div class="block md:flex flex-col justify-end">
       <h1 class="text-[rgba(var(--oblatum-color-primary))]">天气</h1>
       <h1>图标扩展</h1>
