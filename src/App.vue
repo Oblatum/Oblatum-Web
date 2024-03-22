@@ -104,8 +104,8 @@ onMounted(() => {
         <RouterView class="z-100 relative"></RouterView>
         <div class="py-8 px-4 flex flex-col items-center justify-center opacity-65 [&>*]:m-0 z-10">
           <p class="text-sm scale-75">OpenSource 2024 <a class="no-underline hover:underline cursor-pointer"
-            href="https://github.com/Oblatum" target="_blank">Oblatum Organization.</a> </p>
-          <p class="text-sm scale-75">v0.1.240321.1742</p>
+            href="https://github.com/Oblatum" target="_blank">Oblatum Org.</a> </p>
+          <p class="text-sm scale-75">v0.1.240322.1439</p>
           <p class="text-sm scale-75"><a href="https://beian.miit.gov.cn" target="_blank" class="no-underline hover:underline cursor-pointer">蜀ICP备2024061249号-1</a></p>
 
         </div>
