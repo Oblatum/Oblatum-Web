@@ -8,6 +8,7 @@
 
 import { useGithubStore } from '@/stores/github';
 import { computed } from 'vue';
+import { $ } from 'mdui/jq.js';
 const githubUrl = useGithubStore().getGithubUrl
 
 //接收父组件传来的icon属性(动态可变)
@@ -35,4 +36,18 @@ const appTextFormat = (text) => {
         return text.charAt(0).toUpperCase() + text.slice(1)
     }
 }
+
+let error_count = 0
+
+$( "img" ).on( "error", function() {
+    if(error_count>5){
+        return
+    }else if(error_count == 5){
+        console.log("图片加载失败次数过多，已停止加载")
+        return
+    }
+    error_count++
+    let newSrc = imgurl
+    $(this).attr("src", newSrc)
+})
 </script>
