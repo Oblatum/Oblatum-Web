@@ -6,7 +6,7 @@
             <div class="grow">
                 <p class="opacity-85 text-xl">Oblatum 图标</p>
                 <p class="opacity-65 capitalize">{{ version }}</p>
-                <mdui-button full-width class="w-full" :href="githubProxy + download_url" target="_blank">
+                <mdui-button full-width class="w-full" :href="download_url" target="_blank">
                     <mdui-icon slot="icon" name="downloading--outlined"></mdui-icon>
                     下载
                 </mdui-button>
